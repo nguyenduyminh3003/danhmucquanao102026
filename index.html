@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fdfcfa">
+<title>Danh Mục Quần Áo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --ivory: #fdfcfa;
+    --yellow: #fbb118;
+    --dark: #454a4c;
+    --light: #f1f0ec;
+    --border-line: #e6e5e0;
+  }
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--ivory); }
+  body {
+    font-family: 'Inter', 'Roboto', -apple-system, sans-serif;
+    color: var(--black);
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  img { display: block; }
+  summary { list-style: none; cursor: pointer; user-select: none; }
+  summary::-webkit-details-marker { display: none; }
+
+  /* ---------- Header ---------- */
+  .top { background: var(--ivory); border-bottom: 1px solid var(--light); z-index: 20; }
+  @media (min-width: 760px) {
+    .top {
+      position: sticky; top: 0;
+      background: rgba(253, 252, 250, 0.94);
+      backdrop-filter: saturate(180%) blur(16px);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+    }
+  }
+  .top-inner { max-width: 1100px; margin: 0 auto; padding: 14px 16px 12px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { flex: none; width: 136px; height: 26px; overflow: hidden; }
+  .logo img { height: 48px; width: auto; margin: -10.5px 0 0 -5px; mix-blend-mode: multiply; }
+  .brand-sep { width: 1px; height: 18px; background: var(--border-line); }
+  .brand h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.2px; }
+
+  .search {
+    margin-top: 12px; width: 100%; background: var(--light); border: 0; border-radius: 10px;
+    padding: 10px 14px; font: inherit; font-size: 14.5px; color: var(--black); outline: none;
+    transition: box-shadow 0.15s;
+  }
+  .search::placeholder { color: var(--dark); opacity: .7; }
+  .search:focus { box-shadow: 0 0 0 2px var(--black) inset; }
+
+  /* Bộ lọc tình trạng trên Header */
+  .status-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .status-label {
+    flex: none; font-size: 12px; font-weight: 600; color: var(--dark);
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  #statusPills {
+    display: flex; flex-wrap: wrap; gap: 6px 8px;
+  }
+
+  .seg { display: flex; margin-top: 12px; background: var(--light); border-radius: 10px; padding: 3px; }
+  .seg button { flex: 1; padding: 7px 0; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--dark); }
+  .seg button.on { background: var(--ivory); color: var(--black); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 18px 16px 64px; }
+
+  .pills { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .pills::-webkit-scrollbar { display: none; }
+  .pill {
+    flex: none; padding: 6px 13px; border-radius: 999px;
+    background: var(--light); color: var(--dark); font-size: 13px; font-weight: 500;
+    transition: all 0.15s; display: inline-flex; align-items: center;
+  }
+  .pill.on { background: var(--black); color: var(--ivory); }
+  .pill .n { opacity: .7; margin-left: 5px; font-size: 12px; font-weight: 400; }
+  .pill.on .n { opacity: .85; }
+
+  /* Tab Sản phẩm: Cho phép các nút lọc tự động xuống hàng để hiển thị đầy đủ 100%, không bị cắt */
+  #listPills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .tools { display: flex; gap: 6px; flex: none; }
+  .tool {
+    padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    color: var(--dark); background: var(--light); transition: all 0.15s;
+  }
+  .tool:active, .tool:hover { background: var(--black); color: var(--ivory); }
+
+  .summary { font-size: 13px; color: var(--dark); margin: 6px 0 20px; line-height: 1.5; }
+  .summary b { color: var(--black); font-weight: 600; }
+  .summary .active-tag {
+    display: inline-block; background: var(--black); color: var(--ivory);
+    padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 6px;
+  }
+  .count { color: var(--dark); font-weight: 400; font-size: 13px; margin-left: 6px; white-space: nowrap; }
+  .empty { text-align: center; color: var(--dark); padding: 48px 0; font-size: 14px; }
+
+  /* ---------- Tree Hierarchy: Font sizes & Left Indentations ---------- */
+  .chev {
+    flex: none; width: 8px; height: 8px; margin: 0 4px 0 12px;
+    border-right: 1.5px solid var(--dark); border-bottom: 1.5px solid var(--dark);
+    transform: rotate(-45deg); transition: transform .2s ease;
+  }
+  details[open] > summary .chev { transform: rotate(45deg); }
+
+  .cat { margin-bottom: 36px; }
+
+  /* CẤP 1: Chủng loại (Heading 1) — Sát lề chuẩn (0px), Lớn nhất, Đậm nhất */
+  .l1 {
+    font-size: 26px; font-weight: 800; letter-spacing: -0.5px;
+    color: var(--black); line-height: 1.25; padding-bottom: 10px;
+    border-bottom: 2px solid var(--black); margin-bottom: 4px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .l1 .count { font-size: 14px; font-weight: 500; color: var(--dark); }
+
+  .node > summary { display: flex; align-items: center; justify-content: space-between; }
+  .node-text { min-width: 0; flex: 1; }
+  .def {
+    font-size: 13px; font-weight: 400; color: var(--dark);
+    line-height: 1.45; margin-top: 3px; display: block;
+  }
+
+  /* CẤP 2: Kiểu sản phẩm (Heading 2) — Thụt lề cấp 2, font nhỏ hơn, độ đậm vừa */
+  .l2 {
+    margin-left: 14px;
+    border-left: 2px solid var(--border-line);
+    border-top: 1px solid var(--light);
+  }
+  .l2:first-of-type { border-top: none; }
+  .l2 > summary {
+    padding: 12px 0 12px 14px;
+  }
+  .l2 > summary .t {
+    font-size: 18px; font-weight: 700; color: var(--black);
+    letter-spacing: -0.2px;
+  }
+  .l2 > summary .count { font-size: 13px; }
+
+  /* CẤP 3: Dòng sản phẩm (Heading 3) — Thụt lề cấp 3, font nhỏ hơn, có vạch vàng */
+  .l3 {
+    margin-left: 18px;
+    border-left: 2px solid var(--border-line);
+    margin-bottom: 8px;
+  }
+  .l3 > summary {
+    padding: 10px 0 10px 14px;
+  }
+  .l3 > summary .t {
+    font-size: 15.5px; font-weight: 600; color: var(--black);
+    display: inline-flex; align-items: center;
+  }
+  .l3 > summary .t::before {
+    content: ''; display: inline-block; width: 3.5px; height: 13px;
+    background: var(--yellow); border-radius: 2px; margin-right: 8px;
+  }
+  .l3 > summary .def {
+    margin-left: 11.5px; font-size: 13px; color: var(--dark);
+  }
+
+  /* CẤP 4: Phiên bản (Heading 4) — Thụt lề cấp 4, font nhỏ hơn, màu chữ nhạt hơn */
+  .l4 {
+    margin-left: 20px;
+    border-left: 2px solid var(--border-line);
+    margin-bottom: 8px;
+  }
+  .l4 > summary {
+    padding: 8px 0 8px 14px;
+  }
+  .l4 > summary .t {
+    font-size: 14px; font-weight: 600; color: var(--dark);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .l4[open] > summary .t { color: var(--black); font-weight: 700; }
+  .l4 > summary .def {
+    font-size: 12px; color: var(--dark); opacity: 0.9;
+  }
+
+  /* CẤP 5: Sản phẩm (Body Grid) — Thụt lề cấp 5 (sâu nhất), hiển thị hình ảnh & ID */
+  .l5-wrap {
+    margin-left: 14px;
+    padding: 10px 0 16px 14px;
+    border-left: 2px dashed var(--border-line);
+  }
+  .prod-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 14px 10px;
+  }
+  @media (min-width: 600px) { .prod-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .prod-grid { grid-template-columns: repeat(5, 1fr); gap: 16px 12px; } }
+
+  .imgbox {
+    width: 100%; aspect-ratio: 3 / 4; background: var(--light);
+    border-radius: 10px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .imgbox img {
+    max-width: 100%; max-height: 100%; width: auto; height: auto;
+    object-fit: contain;
+  }
+
+  .card { text-align: left; min-width: 0; cursor: pointer; }
+  .card-id {
+    font-size: 12.5px; font-weight: 700; margin-top: 6px;
+    line-height: 1.3; color: var(--black);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-sub { font-size: 11.5px; color: var(--dark); margin-top: 1px; }
+
+  /* ---------- Product list tab ---------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 12px; margin-top: 16px; }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1000px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  .card-tag { font-size: 12px; color: var(--dark); margin-top: 8px; }
+  .card-name {
+    font-size: 14px; font-weight: 600; line-height: 1.3; margin-top: 2px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .more {
+    display: block; margin: 28px auto 0; padding: 11px 24px;
+    border-radius: 999px; background: var(--light); font-weight: 600;
+  }
+
+  /* ---------- Dictionary Tab ---------- */
+  .dict-toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; gap: 6px; }
+  .dict-item { border-top: 1px solid var(--border-line); }
+  .dict-item:last-child { border-bottom: 1px solid var(--border-line); }
+  .dict-item > summary { padding: 14px 0; display: flex; justify-content: space-between; align-items: center; }
+  .dict-name { font-weight: 700; font-size: 18px; letter-spacing: -0.2px; }
+  .dict-body { padding: 0 0 18px 16px; }
+  .dict-def { color: var(--dark); font-size: 14px; margin-bottom: 16px; line-height: 1.5; }
+  .dict-ver {
+    border-left: 2px solid var(--border-line);
+    padding: 6px 0 8px 14px; margin-bottom: 14px;
+  }
+  .dict-ver b { font-weight: 700; font-size: 14.5px; display: block; color: var(--black); }
+  .dict-ver .vdef { font-size: 13px; color: var(--dark); display: block; margin-top: 2px; line-height: 1.4; }
+  .types { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .types-label { font-size: 12px; font-weight: 600; color: var(--dark); }
+  .type-chip {
+    font-size: 12px; background: var(--light); border-radius: 6px;
+    padding: 3px 8px; color: var(--black); font-weight: 500;
+  }
+
+  /* ---------- Product Sheet (Modal) ---------- */
+  .sheet-bg {
+    position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.35);
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .sheet-bg.open { display: flex; }
+  .sheet {
+    background: var(--ivory); width: 100%; max-width: 720px; max-height: 92vh;
+    overflow-y: auto; border-radius: 18px 18px 0 0;
+    padding: 10px 18px calc(28px + env(safe-area-inset-bottom));
+    animation: up .25s ease-out;
+  }
+  @media (min-width: 760px) {
+    .sheet-bg { align-items: center; padding: 24px; }
+    .sheet { border-radius: 18px; max-height: 88vh; }
+  }
+  @keyframes up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .grab { width: 36px; height: 4px; border-radius: 4px; background: var(--light); margin: 0 auto 6px; }
+  .sheet-top {
+    position: sticky; top: -10px; background: var(--ivory);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px; padding: 6px 0 10px; z-index: 2;
+  }
+  .crumb { font-size: 12px; color: var(--dark); }
+  .close {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--light); font-size: 16px; color: var(--dark); flex: none;
+  }
+  .sheet h2 { font-size: 21px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.25; margin: 4px 0 6px; }
+  .hero {
+    width: 100%; height: min(60vh, 520px); background: var(--light);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  .swatches { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 12px 0 4px; }
+  .swatches::-webkit-scrollbar { display: none; }
+  .sw { flex: none; width: 60px; text-align: center; }
+  .sw .imgbox { border-radius: 8px; border: 2px solid transparent; }
+  .sw.on .imgbox { border-color: var(--black); }
+  .sw-name {
+    font-size: 11px; color: var(--dark); margin-top: 3px; line-height: 1.2;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .sku {
+    font-size: 13px; color: var(--dark); display: flex;
+    flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-top: 6px;
+  }
+  .sku b { color: var(--black); font-weight: 600; }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 6px; background: var(--light);
+    color: var(--black); border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 600;
+  }
+  .status-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); }
+
+  .label { font-size: 13px; font-weight: 700; margin: 18px 0 6px; display: flex; align-items: center; gap: 6px; }
+  .label::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); }
+  .ktp { font-size: 14px; white-space: pre-line; line-height: 1.5; color: #1e293b; }
+  .fold { margin-top: 14px; border-top: 1px solid var(--light); }
+  .fold > summary { padding: 14px 0; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 14px; }
+  .fold-body { font-size: 14px; color: var(--dark); white-space: pre-line; padding-bottom: 8px; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="logo"><img src="assets/logo.jpg" alt="YaMe"></span>
+      <span class="brand-sep"></span>
+      <h1>Danh Mục Quần Áo 2026</h1>
+    </div>
+    <input id="q" class="search" type="search" placeholder="Tìm tên, mã SKU, tính năng, dòng sản phẩm..." autocomplete="off">
+    <div class="status-row">
+      <span class="status-label">Tình trạng:</span>
+      <div class="pills" id="statusPills"></div>
+    </div>
+    <nav class="seg" id="seg">
+      <button data-tab="tree" class="on">Sơ đồ</button>
+      <button data-tab="list">Sản phẩm</button>
+      <button data-tab="dict">Định nghĩa</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- TAB 1: SƠ ĐỒ MINDMAP (Level-by-Level Accordion) -->
+  <section id="tab-tree">
+    <div class="toolbar">
+      <div class="pills" id="treePills"></div>
+      <div class="tools">
+        <button class="tool" id="expandAll">Bung hết</button>
+        <button class="tool" id="collapseAll">Thu gọn</button>
+      </div>
+    </div>
+    <p class="summary" id="treeSummary"></p>
+    <div id="tree"></div>
+    <div class="empty" id="treeEmpty" hidden>Không có sản phẩm nào ở tình trạng này.</div>
+  </section>
+
+  <!-- TAB 2: THƯ VIỆN SẢN PHẨM -->
+  <section id="tab-list" hidden>
+    <div class="pills" id="listPills"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>Không tìm thấy sản phẩm.</div>
+    <button class="more" id="more" hidden>Xem thêm</button>
+  </section>
+
+  <!-- TAB 3: ĐỊNH NGHĨA -->
+  <section id="tab-dict" hidden>
+    <div class="toolbar">
+      <p class="summary" id="dictSummary" style="margin:0;"></p>
+      <div class="tools">
+        <button class="tool" id="dictExpandAll">Bung hết</button>
+        <button class="tool" id="dictCollapseAll">Thu gọn</button>
+      </div>
+    </div>
+    <div id="dict" style="margin-top:14px;"></div>
+  </section>
+</main>
+
+<!-- DRAWER / MODAL CHI TIẾT SẢN PHẨM -->
+<div class="sheet-bg" id="prodSheet">
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="sheet-top">
+      <span class="crumb" id="prodCrumb"></span>
+      <button class="close" data-close="prodSheet" aria-label="Đóng">✕</button>
+    </div>
+    <div class="hero"><img id="prodImg" alt=""></div>
+    <div class="swatches" id="prodSwatches"></div>
+    <h2 id="prodName"></h2>
+    <div class="sku" id="prodSku"></div>
+
+    <div id="ktpWrap">
+      <div class="label">Điểm bán hàng</div>
+      <div class="ktp" id="prodKtp"></div>
+    </div>
+
+    <details class="fold" id="descFold">
+      <summary>Mô tả chi tiết <span class="chev"></span></summary>
+      <div class="fold-body" id="prodDesc"></div>
+    </details>
+    <details class="fold" id="defFold">
+      <summary>Dòng & phiên bản là gì? <span class="chev"></span></summary>
+      <div class="fold-body" id="prodDef"></div>
+    </details>
+  </div>
+</div>
+
+<script src="products_mindmap_data.js"></script>
+<script>
+(() => {
+  const D = window.PRODUCT_DATA;
+  const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400"><rect width="100%" height="100%" fill="#f1f0ec"/></svg>');
+  const PAGE = 40;
+  const STATUS_ORDER = ['Đang Bán Sẽ Tái Sản Xuất', 'Đang Bán Ngừng TSX Chờ Thanh Lý', 'Chờ Mở Bán', 'Đang SR'];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const img = (src, alt) => `<div class="imgbox"><img src="${esc(src || PLACEHOLDER)}" alt="${esc(alt)}" loading="lazy" onerror="this.onerror=null;this.src='${PLACEHOLDER}'"></div>`;
+  const group = name => name.startsWith('Quần') ? 'Quần' : 'Áo';
+  const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+
+  const allStatuses = [...new Set(D.models.flatMap(m => m.colors.map(c => c.status)))]
+    .sort((a, b) => (STATUS_ORDER.indexOf(a) + 1 || 99) - (STATUS_ORDER.indexOf(b) + 1 || 99));
+
+  // State: single active status (null = Tất cả)
+  const state = { tab: 'tree', activeStatus: null, treeGroup: 'Tất cả', listFilter: 'Tất cả', q: '', shown: PAGE };
+  let VIEW = []; // Danh sách models & colors sau khi lọc status
+
+  /* ---------- TÍNH TOÁN DỮ LIỆU VIEW THEO TÌNH TRẠNG ---------- */
+  function computeView() {
+    const targetStatus = state.activeStatus;
+    VIEW = D.models.map(m => {
+      const colors = targetStatus ? m.colors.filter(c => c.status === targetStatus) : m.colors;
+      if (!colors.length) return null;
+      const v = Object.assign({}, m, {
+        colors,
+        mainImg: colors.find(c => c.img)?.img || m.mainImg
+      });
+      v._s = norm([m.id, m.name, m.chungLoai, m.kieuSP, m.dongSP, m.phienBan, m.ktp, ...colors.map(c => c.sku + ' ' + c.color)].join(' '));
+      return v;
+    }).filter(Boolean);
+  }
+
+  /* ---------- RENDER BỘ LỌC TÌNH TRẠNG (HEADER) ---------- */
+  function renderStatusPills() {
+    // Đếm tổng số SKU cho từng tình trạng
+    const skuCountFor = s => D.models.reduce((acc, m) => acc + m.colors.filter(c => c.status === s).length, 0);
+    const totalSkus = D.models.reduce((acc, m) => acc + m.colors.length, 0);
+
+    const items = [
+      ['Tất cả', totalSkus, state.activeStatus === null],
+      ...allStatuses.map(s => [s, skuCountFor(s), state.activeStatus === s])
+    ];
+
+    $('statusPills').innerHTML = items.map(([s, n, on]) =>
+      `<button class="pill ${on ? 'on' : ''}" data-status="${esc(s)}">${esc(s)}<span class="n">${n}</span></button>`).join('');
+  }
+
+  $('statusPills').addEventListener('click', e => {
+    const b = e.target.closest('.pill'); if (!b) return;
+    const v = b.dataset.status;
+    if (v === 'Tất cả' || state.activeStatus === v) {
+      state.activeStatus = null; // Trở về Tất cả
+    } else {
+      state.activeStatus = v; // Chọn tình trạng cụ thể
+    }
+    state.shown = PAGE;
+    refresh();
+  });
+
+  /* ---------- TABS ---------- */
+  function setTab(tab) {
+    state.tab = tab;
+    ['tree', 'list', 'dict'].forEach(t => $('tab-' + t).hidden = t !== tab);
+    document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('seg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setTab(b.dataset.tab); });
+
+  function pills(el, items, current, onPick) {
+    el.innerHTML = items.map(i => `<button class="pill ${i === current ? 'on' : ''}" data-v="${esc(i)}">${esc(i)}</button>`).join('');
+    el.onclick = e => { const b = e.target.closest('.pill'); if (b) onPick(b.dataset.v); };
+  }
+
+  // Cấu trúc lồng ghép đa cấp: Chủng loại > Kiểu SP > Dòng SP > Phiên bản > [models]
+  function nest(list) {
+    const root = new Map();
+    list.forEach(m => {
+      const path = [m.chungLoai, m.kieuSP, m.dongSP, m.phienBan];
+      let node = root;
+      path.forEach((k, i) => {
+        if (!node.has(k)) node.set(k, i === 3 ? [] : new Map());
+        node = node.get(k);
+      });
+      node.push(m);
+    });
+    return root;
+  }
+  const countModels = node => Array.isArray(node) ? node.length : [...node.values()].reduce((a, n) => a + countModels(n), 0);
+  const countSkus = list => list.reduce((a, m) => a + m.colors.length, 0);
+
+  /* ---------- TAB 1: SƠ ĐỒ MINDMAP THEO PHÂN CẤP & THÒ THỤT LỀ ---------- */
+  function renderTree() {
+    pills($('treePills'), ['Tất cả', 'Áo', 'Quần'], state.treeGroup, v => { state.treeGroup = v; renderTree(); });
+
+    // Lưu lại trạng thái mở/đóng hiện tại để không bị đóng khi click lọc
+    const openKeys = new Set([...document.querySelectorAll('#tree details[open]')].map(d => d.dataset.key));
+    const list = VIEW.filter(m => state.treeGroup === 'Tất cả' || group(m.chungLoai) === state.treeGroup);
+    const tree = nest(list);
+    const viewIndex = new Map(VIEW.map((m, i) => [m, i]));
+    const o = key => openKeys.has(key) ? ' open' : '';
+
+    let html = '';
+    for (const [cl, kieus] of tree) {
+      const clTotalModels = countModels(kieus);
+      let clSkus = 0;
+      for (const [, dongs] of kieus) {
+        for (const [, pbs] of dongs) {
+          for (const [, mList] of pbs) {
+            clSkus += countSkus(mList);
+          }
+        }
+      }
+
+      // CẤP 1: Chủng loại (Heading 1) - Sát lề
+      html += `<div class="cat">
+        <h2 class="l1">${esc(cl)}<span class="count">${clTotalModels} mẫu · ${clSkus} SKU</span></h2>`;
+
+      // CẤP 2: Kiểu SP (Heading 2) - Thụt lề 1
+      for (const [kieu, dongs] of kieus) {
+        const kKey = esc(`${cl}|${kieu}`);
+        const kModels = countModels(dongs);
+        let kSkus = 0;
+        for (const [, pbs] of dongs) {
+          for (const [, mList] of pbs) {
+            kSkus += countSkus(mList);
+          }
+        }
+
+        html += `<details class="node l2" data-key="${kKey}"${o(kKey)}>
+          <summary>
+            <span class="node-text">
+              <span class="t">${esc(kieu)}</span>
+              <span class="count">${kModels} mẫu · ${kSkus} SKU</span>
+            </span>
+            <span class="chev"></span>
+          </summary>
+          <div>`;
+
+        // CẤP 3: Dòng SP (Heading 3) - Thụt lề 2, kèm định nghĩa dòng
+        for (const [dong, pbs] of dongs) {
+          const dKey = esc(`${cl}|${kieu}|${dong}`);
+          const dModels = countModels(pbs);
+          let dSkus = 0;
+          for (const [, mList] of pbs) {
+            dSkus += countSkus(mList);
+          }
+
+          html += `<details class="node l3" data-key="${dKey}"${o(dKey)}>
+            <summary>
+              <span class="node-text">
+                <span class="t">${esc(dong)}</span>
+                <span class="count">${dModels} mẫu · ${dSkus} SKU</span>
+                <span class="def">${esc(D.lineDefinitions[dong] || '')}</span>
+              </span>
+              <span class="chev"></span>
+            </summary>
+            <div>`;
+
+          // CẤP 4: Phiên bản (Heading 4) - Thụt lề 3, kèm định nghĩa phiên bản
+          for (const [pb, models] of pbs) {
+            const pKey = esc(`${cl}|${kieu}|${dong}|${pb}`);
+            const pSkus = countSkus(models);
+
+            html += `<details class="node l4" data-key="${pKey}"${o(pKey)}>
+              <summary>
+                <span class="node-text">
+                  <span class="t">${esc(pb)}</span>
+                  <span class="count">${models.length} mẫu · ${pSkus} SKU</span>
+                  <span class="def">${esc(D.versionDefinitions[pb] || '')}</span>
+                </span>
+                <span class="chev"></span>
+              </summary>
+              <!-- CẤP 5: Sản phẩm (Body content) - Thụt lề sâu nhất, hiển thị ID và Hình ảnh -->
+              <div class="l5-wrap">
+                <div class="prod-grid">
+                  ${models.map(m => `
+                    <button class="card" data-v="${viewIndex.get(m)}">
+                      ${img(m.mainImg, m.id)}
+                      <div class="card-id">${esc(m.id || m.name)}</div>
+                      <div class="card-sub">${m.colors.length} màu · SKU ${esc(m.colors[0]?.sku || '-')}</div>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            </details>`;
+          }
+          html += `</div></details>`;
+        }
+        html += `</div></details>`;
+      }
+      html += `</div>`;
+    }
+
+    $('tree').innerHTML = html;
+    $('treeEmpty').hidden = list.length > 0;
+
+    // Summary line
+    const statusNote = state.activeStatus ? `<span class="active-tag">${esc(state.activeStatus)}</span>` : '';
+    $('treeSummary').innerHTML = `${statusNote}Hiển thị: <b>${list.length}</b> mẫu · <b>${countSkus(list)}</b> SKU`;
+  }
+
+  $('tree').addEventListener('click', e => {
+    const c = e.target.closest('[data-v]');
+    if (c) openProduct(VIEW[+c.dataset.v]);
+  });
+
+  // Bung hết & Thu gọn
+  $('expandAll').onclick = () => document.querySelectorAll('#tree details').forEach(d => d.open = true);
+  $('collapseAll').onclick = () => document.querySelectorAll('#tree details').forEach(d => d.open = false);
+
+  /* ---------- TAB 2: THƯ VIỆN SẢN PHẨM ---------- */
+  const lineNames = [...new Set(D.models.map(m => m.dongSP))];
+  function filtered() {
+    let list = VIEW;
+    const f = state.listFilter;
+    if (f === 'Áo' || f === 'Quần') list = list.filter(m => group(m.chungLoai) === f);
+    else if (f !== 'Tất cả') list = list.filter(m => m.dongSP === f);
+    if (state.q) {
+      const terms = norm(state.q).split(/\s+/).filter(Boolean);
+      list = list.filter(m => terms.every(t => m._s.includes(t)));
+    }
+    return list;
+  }
+
+  function renderList() {
+    const activeLines = [...new Set(VIEW.map(m => m.dongSP))];
+    const filterOptions = ['Tất cả', 'Áo', 'Quần', ...activeLines];
+    if (!filterOptions.includes(state.listFilter)) {
+      state.listFilter = 'Tất cả';
+    }
+    pills($('listPills'), filterOptions, state.listFilter, v => {
+      state.listFilter = v; state.shown = PAGE; renderList();
+    });
+    const list = filtered();
+    $('grid').innerHTML = list.slice(0, state.shown).map(m => `
+      <button class="card" data-v="${VIEW.indexOf(m)}">
+        ${img(m.mainImg, m.name)}
+        <div class="card-tag">${esc(m.dongSP)} · ${esc(m.phienBan)}</div>
+        <div class="card-name">${esc(m.name)}</div>
+        <div class="card-sub">${m.colors.length} màu · ${esc(m.id || m.colors[0]?.sku || '')}</div>
+      </button>
+    `).join('');
+    $('empty').hidden = list.length > 0;
+    $('more').hidden = list.length <= state.shown;
+    $('more').textContent = `Xem thêm (${list.length - state.shown})`;
+  }
+
+  $('more').onclick = () => { state.shown += PAGE; renderList(); };
+  $('grid').addEventListener('click', e => {
+    const c = e.target.closest('[data-v]');
+    if (c) openProduct(VIEW[+c.dataset.v]);
+  });
+
+  let timer;
+  $('q').addEventListener('input', e => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      state.q = e.target.value.trim(); state.shown = PAGE;
+      if (state.q && state.tab !== 'list') setTab('list');
+      renderList();
+    }, 200);
+  });
+
+  /* ---------- TAB 3: ĐỊNH NGHĨA (Kèm Kiểu Sản Phẩm Áp Dụng) ---------- */
+  function renderDict() {
+    const openKeys = new Set([...document.querySelectorAll('#dict details[open]')].map(d => d.dataset.key));
+    // map: dongSP -> phienBan -> { kieuSP: { modelCount, skuCount } }
+    const map = new Map();
+    VIEW.forEach(m => {
+      if (!map.has(m.dongSP)) map.set(m.dongSP, new Map());
+      const vers = map.get(m.dongSP);
+      if (!vers.has(m.phienBan)) vers.set(m.phienBan, new Map());
+      const types = vers.get(m.phienBan);
+      const curr = types.get(m.kieuSP) || { models: 0, skus: 0 };
+      curr.models += 1;
+      curr.skus += m.colors.length;
+      types.set(m.kieuSP, curr);
+    });
+
+    const statusNote = state.activeStatus ? `<span class="active-tag">${esc(state.activeStatus)}</span>` : '';
+    $('dictSummary').innerHTML = `${statusNote}<b>${map.size}</b> dòng sản phẩm · <b>${[...map.values()].reduce((a, v) => a + v.size, 0)}</b> phiên bản`;
+
+    $('dict').innerHTML = [...map].map(([dong, vers]) => `
+      <details class="dict-item" data-key="${esc(dong)}"${openKeys.has(dong) ? ' open' : ''}>
+        <summary>
+          <span>
+            <span class="dict-name">${esc(dong)}</span>
+            <span class="count">${vers.size} phiên bản</span>
+          </span>
+          <span class="chev"></span>
+        </summary>
+        <div class="dict-body">
+          <p class="dict-def">${esc(D.lineDefinitions[dong] || '')}</p>
+          ${[...vers].map(([pb, types]) => `
+            <div class="dict-ver">
+              <b>${esc(pb)}</b>
+              <span class="vdef">${esc(D.versionDefinitions[pb] || '')}</span>
+              <div class="types">
+                <span class="types-label">Kiểu sản phẩm đang có:</span>
+                ${[...types].map(([t, stat]) => `
+                  <span class="type-chip">
+                    ${esc(t)} <span class="count" style="margin-left:3px">${stat.models} mẫu (${stat.skus} SKU)</span>
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </details>
+    `).join('') || '<div class="empty">Không có dữ liệu ở tình trạng này.</div>';
+  }
+
+  $('dictExpandAll').onclick = () => document.querySelectorAll('#dict details').forEach(d => d.open = true);
+  $('dictCollapseAll').onclick = () => document.querySelectorAll('#dict details').forEach(d => d.open = false);
+
+  /* ---------- DRAWER / MODAL CHI TIẾT SẢN PHẨM ---------- */
+  function openSheet(id) {
+    $(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+    $(id).querySelector('.sheet').scrollTop = 0;
+  }
+  function closeSheet(id) {
+    $(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  $('prodSheet').addEventListener('click', e => {
+    if (e.target.id === 'prodSheet' || e.target.dataset.close) closeSheet('prodSheet');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSheet('prodSheet');
+  });
+
+  function openProduct(m) {
+    $('prodCrumb').textContent = `${m.kieuSP} · ${m.dongSP} · ${m.phienBan}`;
+    $('prodName').textContent = m.name;
+    const setColor = i => {
+      const c = m.colors[i];
+      $('prodImg').src = c.img || m.mainImg || PLACEHOLDER;
+      $('prodImg').alt = m.name;
+      $('prodSku').innerHTML = `
+        <span><b>${esc(c.color || '—')}</b> · SKU ${esc(c.sku || '—')}</span>
+        <span class="status-badge">${esc(c.status)}</span>
+      `;
+      [...$('prodSwatches').children].forEach((el, j) => el.classList.toggle('on', j === i));
+    };
+
+    $('prodSwatches').innerHTML = m.colors.map((c, i) => `
+      <button class="sw" data-i="${i}">
+        ${img(c.img, c.color)}
+        <div class="sw-name">${esc(c.color)}</div>
+      </button>
+    `).join('');
+    $('prodSwatches').onclick = e => {
+      const b = e.target.closest('.sw');
+      if (b) setColor(+b.dataset.i);
+    };
+    setColor(0);
+
+    $('ktpWrap').hidden = !m.ktp;
+    $('prodKtp').textContent = m.ktp || '';
+    const desc = m.desc || m.shortDesc;
+    $('descFold').hidden = !desc;
+    $('descFold').open = !m.ktp && !!desc;
+    $('prodDesc').textContent = desc || '';
+    $('defFold').open = false;
+    $('prodDef').textContent = `${m.dongSP}: ${D.lineDefinitions[m.dongSP] || ''}\n\n${m.phienBan}: ${D.versionDefinitions[m.phienBan] || ''}`;
+    openSheet('prodSheet');
+  }
+
+  function refresh() {
+    computeView();
+    renderStatusPills();
+    renderTree();
+    renderList();
+    renderDict();
+  }
+
+  // Khởi động
+  refresh();
+
+  // Xử lý deep link URL
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.includes('dict')) setTab('dict');
+  if (h.includes('list')) setTab('list');
+  if (h.includes('open')) {
+    document.querySelectorAll('#tree details, #dict details').forEach(d => d.open = true);
+  }
+  if (h.startsWith('p=')) {
+    const m = VIEW.find(x => x.id === h.slice(2));
+    if (m) openProduct(m);
+  }
+})();
+</script>
+</body>
+</html>
